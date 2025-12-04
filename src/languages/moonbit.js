@@ -10,6 +10,8 @@ function moonbit(hljs) {
   const IDENT_RE = /[a-zA-Z_][a-zA-Z0-9_]*/;
   
   const KEYWORDS = [
+    "_",
+    "derive",
     "as",
     "lexmatch",
     "async",
@@ -27,6 +29,7 @@ function moonbit(hljs) {
     "guard",
     "if",
     "impl",
+    "is",
     "in",
     "let",
     "loop",
@@ -75,19 +78,18 @@ function moonbit(hljs) {
     "Bytes",
     "Array",
     "FixedArray",
-    "List",
     "Map",
     "Ref",
     "Option",
     "Result",
     "BigInt",
-    "Tuple",
     "Show",
     "Default",
     "Eq",
     "Compare",
     "Hash",
-    "Debug",
+    "Some",
+    "None",
     "Error" // common error type
   ];
 
@@ -141,17 +143,22 @@ function moonbit(hljs) {
     className: "string",
     variants: [
       {
+        // 普通字符串，支持转义和内插
         begin: '"',
         end: '"',
         contains: [hljs.BACKSLASH_ESCAPE, STRING_INTERPOLATION]
       },
       {
+        // b'...'，支持转义
         begin: "b'",
-        end: "'"
+        end: "'",
+        contains: [hljs.BACKSLASH_ESCAPE]
       },
       {
+        // 单引号字符 / 字符串，支持转义
         begin: "'",
-        end: "'"
+        end: "'",
+        contains: [hljs.BACKSLASH_ESCAPE]
       }
     ]
   };
@@ -171,7 +178,7 @@ function moonbit(hljs) {
     className: "function",
     begin: regex.concat(
       /\b/,
-      /(?!let|for|while|if|else|match\b)/,
+      /(?!let|for|while|if|else|match|is|pub|derive\b)/,
       IDENT_RE,
       regex.lookahead(/\s*\(/)
     )
@@ -191,7 +198,6 @@ function moonbit(hljs) {
       {
         begin: /\bpub\s*\(/,
         end: /\)/,
-        keywords: { keyword: "pub" },
         contains: [
           {
             className: "keyword",
@@ -277,14 +283,14 @@ function moonbit(hljs) {
             type: TYPES
         }
       },
-      {
-        className: "punctuation",
-        begin: '->'
-      },
       FUNCTION_INVOKE,
       {
         className: 'operator',
-        begin: /=>|::/
+        begin: /=>|->|~|\.\.\.|\.\.|::|=|!|\?|!=|[<>]=?|&&|\|\||!|>>|<<|[+\-*/%]=?|[&|]/
+      },
+      {
+        className: 'punctuation',
+        begin: /\.|,|:/
       }
     ]
   };
