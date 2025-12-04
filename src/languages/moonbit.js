@@ -10,6 +10,7 @@ function moonbit(hljs) {
   const IDENT_RE = /[a-zA-Z_][a-zA-Z0-9_]*/;
   
   const KEYWORDS = [
+    "as",
     "async",
     "break",
     "catch",
@@ -244,7 +245,7 @@ function moonbit(hljs) {
       },
       {
         // Constructor call or Enum variant
-        className: "title.class", // or "type"
+        className: "type",
         begin: /\b[A-Z][a-zA-Z0-9_]*/,
         relevance: 0
       },
