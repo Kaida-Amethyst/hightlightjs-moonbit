@@ -1,0 +1,36 @@
+///|
+suberror ArgError {
+  NoInputFiles(String)
+  InValidOption(String)
+}
+
+///|
+fn main_err() -> Unit raise {
+  let usage =
+    #|Usage: mbtcc [options] <input files>
+    #|
+    #|Options:
+    #|  --print-tokens, -toks      Stop after lexing phase and print tokens.
+  let other_options : Array[String] = Array::new()
+  let output : Ref[String] = @ref.new("")
+  let print_tokens : Ref[Bool] = @ref.new(false)
+  
+  let spec : Array[(String, String, @ArgParser.Spec, String)] = [
+    ("--Expand", "-E", Set(expand_only), "Run the preprocessor only."),
+    (
+      "--print-tokens",
+      "-toks",
+      Set(print_tokens),
+      "Stop after lexing phase and print tokens.",
+    )
+  ]
+  
+  for opt in other_options {
+    if opt.has_suffix(".c") {
+      files.push(opt)
+    } else {
+      raise InValidOption("Invalid option `\{opt}`.")
+    }
+  }
+}
+

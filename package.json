@@ -1,0 +1,27 @@
+{
+  "name": "highlightjs-moonbit-gemini",
+  "version": "1.0.0",
+  "description": "MoonBit language support for highlight.js",
+  "main": "dist/moonbit.min.js",
+  "module": "dist/moonbit.es.min.js",
+  "scripts": {
+    "build:cjs": "webpack --config webpack.cjs.config.js",
+    "build:esm": "webpack --config webpack.esm.config.js",
+    "build": "npm run build:cjs && npm run build:esm",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "moonbit",
+    "highlight.js",
+    "highlightjs",
+    "syntax"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {}
+}
+
