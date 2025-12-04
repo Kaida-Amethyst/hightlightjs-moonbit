@@ -201,18 +201,8 @@ function moonbit(hljs) {
       },
       // `longest` as a soft keyword only after `with`
       {
-        begin: /\bwith\s+longest\b/,
-        returnBegin: true,
-        contains: [
-          {
-            className: "keyword",
-            begin: /\bwith\b/
-          },
-          {
-            className: "keyword",
-            begin: /\blongest\b/
-          }
-        ]
+        className: "keyword",
+        begin: /\bwith\s+longest\b/
       },
       COMMENT,
       MULTILINE_STRING,
