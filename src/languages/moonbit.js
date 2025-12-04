@@ -11,6 +11,7 @@ function moonbit(hljs) {
   
   const KEYWORDS = [
     "as",
+    "lexmatch",
     "async",
     "break",
     "catch",
@@ -31,6 +32,7 @@ function moonbit(hljs) {
     "loop",
     "match",
     "mut",
+    "Self",
     "newtype",
     "priv",
     "pub",
@@ -185,6 +187,33 @@ function moonbit(hljs) {
       type: TYPES
     },
     contains: [
+      // `all` as a soft keyword inside pub(...)
+      {
+        begin: /\bpub\s*\(/,
+        end: /\)/,
+        keywords: { keyword: "pub" },
+        contains: [
+          {
+            className: "keyword",
+            begin: /\ball\b/
+          }
+        ]
+      },
+      // `longest` as a soft keyword only after `with`
+      {
+        begin: /\bwith\s+longest\b/,
+        returnBegin: true,
+        contains: [
+          {
+            className: "keyword",
+            begin: /\bwith\b/
+          },
+          {
+            className: "keyword",
+            begin: /\blongest\b/
+          }
+        ]
+      },
       COMMENT,
       MULTILINE_STRING,
       STRING,
